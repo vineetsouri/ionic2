@@ -21748,3 +21748,7 @@ sub {
     padding-top: calc(16px + 20px);
   }
 }
+
+page-resource-details .list-header-md {
+  border-top: 0px;
+}
