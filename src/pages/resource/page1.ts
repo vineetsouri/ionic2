@@ -13,21 +13,25 @@ export class Page1 {
   constructor(public navCtrl: NavController) {
     this.resources = [{
       title: "Excavators",
+      icon: "flask",
       quantity: 4,
       used: 2
     },
     {
       title: "Truck",
+      icon: "boat",
       quantity: 35,
       used: 20
     },
     {
       title: "Tractor",
+      icon: "build",
       quantity: 50,
       used: 20
     },
     {
       title: "Man Power",
+      icon: "beer",
       quantity: 20,
       used: 15
     }]
