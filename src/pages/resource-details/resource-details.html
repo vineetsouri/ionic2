@@ -14,9 +14,11 @@
 
 
 <ion-content padding>
-  <div padding>
-    <h1>{{selectedResource.title}}</h1>
-    <p>Quantity Available: {{selectedResource.quantity}}</p>
-    <p>Quantity Used: {{selectedResource.used}}</p>
-  </div>
+  <ion-list>
+    <ion-list-header>
+      {{selectedResource.title}}
+    </ion-list-header>
+    <ion-item>Quantity Available: {{selectedResource.quantity}}</ion-item>
+    <ion-item>Quantity Used: {{selectedResource.used}}</ion-item>
+  </ion-list>
 </ion-content>
