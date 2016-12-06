@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ResourceDetailsPage } from '../resource-details/resource-details.ts'
 
 import { NavController } from 'ionic-angular';
 
@@ -36,4 +37,13 @@ export class Page1 {
       used: 15
     }]
   }
+
+  itemTapped(event, item) {
+    // That's right, we're pushing to ourselves!
+    this.navCtrl.push(ResourceDetailsPage, {
+      item: item
+    });
+  }
+
+
 }
