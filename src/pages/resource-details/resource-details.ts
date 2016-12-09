@@ -20,7 +20,7 @@ export class ResourceDetailsPage {
   }
 
   ionViewDidLoad() {
-    console.log('Hello ResourceDetailsPage Page');
+    // console.log('Hello ResourceDetailsPage Page');
   }
 
 }

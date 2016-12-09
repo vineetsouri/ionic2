@@ -11,12 +11,20 @@ import { NavController } from 'ionic-angular';
   selector: 'page-login',
   templateUrl: 'login.html'
 })
+
 export class LoginPage {
+
+  userName: string;
+  password: string;
 
   constructor(public navCtrl: NavController) {}
 
   ionViewDidLoad() {
     console.log('Hello LoginPage Page');
+  }
+
+  doLogin() {
+    
   }
 
 }
