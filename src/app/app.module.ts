@@ -3,6 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Page1 } from '../pages/resource/page1';
 import { Page2 } from '../pages/page2/page2';
+import { LoginPage } from '../pages/login/login';
 import { ResourceDetailsPage } from '../pages/resource-details/resource-details';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -21,6 +22,7 @@ export const firebaseAuthConfig = {
 @NgModule({
   declarations: [
     MyApp,
+    LoginPage,
     Page1,
     Page2,
     ResourceDetailsPage
@@ -32,6 +34,7 @@ export const firebaseAuthConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    LoginPage,
     Page1,
     Page2,
     ResourceDetailsPage

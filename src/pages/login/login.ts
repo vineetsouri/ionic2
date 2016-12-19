@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController, LoadingController } from 'ionic-angular';
+import { AngularFire } from 'angularfire2';
+import { Page1 } from '../resource/page1';
 
 /*
   Generated class for the Login page.
@@ -14,17 +16,42 @@ import { NavController } from 'ionic-angular';
 
 export class LoginPage {
 
-  userName: string;
-  password: string;
+  loginUserName: string;
+  loginPassword: string;
+  signUpUserName: string;
+  signUpPassword: string;
+  signUpReconfirmPassword: string;
+  loginBtnSelected: boolean;
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController, private af: AngularFire) {
+    this.loginBtnSelected = true;
+  }
 
   ionViewDidLoad() {
     console.log('Hello LoginPage Page');
   }
 
   doLogin() {
-    
+    let loadingItem = this.loadingCtrl.create({
+      content: "Please Wait.. we are trying to log you in.",
+    });
+    loadingItem.present();
+    this.af.auth.login({email: this.loginUserName, password: this.loginPassword}).then(data => {
+      loadingItem.dismissAll();
+      this.navCtrl.push(Page1);
+    }).catch(err => {
+      console.log(err);
+      loadingItem.dismissAll();
+      this.alertCtrl.create({
+        title: "Unable to Login",
+        subTitle: "Please check your username and password",
+        buttons: ['OK']
+      }).present();
+    })
   }
 
+  doSignUp(){
+    console.log(this.signUpUserName, this.signUpPassword);
+  }
 }

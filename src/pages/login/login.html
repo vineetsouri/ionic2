@@ -14,18 +14,43 @@
 
 
 <ion-content padding>
-  <ion-list>
+  <div>
+    <button ion-button [color]="loginBtnSelected ? 'secondary' : 'primary'" (click)='loginBtnSelected=true'>Login</button>
+    <button ion-button  [color]="!loginBtnSelected ? 'secondary' : 'primary'" (click)='loginBtnSelected=false'>SignUp</button>
+  </div>
+  <div class='loginView' *ngIf='loginBtnSelected'>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="loginUserName"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="userName"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="loginPassword"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
-    </ion-item>
+    </ion-list>
+    <button ion-button full (click)="doLogin()">Login</button>    
+  </div>
+  <div class='signUpView' *ngIf='!loginBtnSelected'>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="signUpUserName"></ion-input>
+      </ion-item>
 
-  </ion-list>
-  <button ion-button full (click)="doLogin()">Login</button>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="signUpPassword"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Reconfirm Password</ion-label>
+        <ion-input type="password" [(ngModel)]="signUpReconfirmPassword"></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <button ion-button full (click)="doSignUp()">SignUp</button>
+  </div>
 </ion-content>
