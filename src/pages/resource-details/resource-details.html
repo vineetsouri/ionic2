@@ -14,11 +14,21 @@
 
 
 <ion-content padding>
-  <ion-list>
+  <ion-item-group>
+  <ion-item-divider color="light">Activities for {{selectedResource.name}}</ion-item-divider>
+    <ion-list>
+      <button ion-item *ngFor="let activity of activityDetails" (click)="itemTapped($event, activity)">
+        <!-- <ion-icon [name]="item.icon" item-left></ion-icon> -->
+        {{activity.date}}
+        <!-- <ion-badge item-right>{{item.quantity}}</ion-badge> -->
+      </button>
+    </ion-list>
+  </ion-item-group>
+  <!-- <ion-list>
     <ion-list-header>
-      {{selectedResource.title}}
+      {{activityDetails.date}}
     </ion-list-header>
-    <ion-item>Quantity Available: {{selectedResource.quantity}}</ion-item>
-    <ion-item>Quantity Used: {{selectedResource.used}}</ion-item>
-  </ion-list>
+    <ion-item>Quantity Available: {{activityDetails.masterActivityId}}</ion-item>
+    <ion-item>Quantity Used: {{activityDetails.projectId}}</ion-item>
+  </ion-list> -->
 </ion-content>

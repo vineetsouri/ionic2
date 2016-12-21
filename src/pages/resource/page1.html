@@ -3,23 +3,19 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Resources</ion-title>
+    <ion-title>Projects</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      List of Resources
-    </ion-card-header>
-    <ion-card-content>
+  <ion-item-group>
+      <ion-item-divider color="light">List of Projects</ion-item-divider>
       <ion-list>
-        <button ion-item *ngFor="let item of resources" (click)="itemTapped($event, item)">
-          <ion-icon [name]="item.icon" item-left></ion-icon>
-          {{item.title}}
-          <ion-badge item-right>{{item.quantity}}</ion-badge>
+        <button ion-item *ngFor="let project of projects" (click)="itemTapped($event, project)">
+          <!-- <ion-icon [name]="item.icon" item-left></ion-icon> -->
+          {{project.name}}
+          <!-- <ion-badge item-right>{{item.quantity}}</ion-badge> -->
         </button>
       </ion-list>
-    </ion-card-content>
-  </ion-card>
+  </ion-item-group>
 </ion-content>
