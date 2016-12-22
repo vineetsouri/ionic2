@@ -4,7 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { AngularFire } from 'angularfire2';
 
 import { LoginPage } from '../pages/login/login';
-import { Page1 } from '../pages/resource/page1';
+import { Resource } from '../pages/resource/page1';
 import { Page2 } from '../pages/page2/page2';
 
 
@@ -27,7 +27,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Resources', component: Page1 },
+      { title: 'Resources', component: Resource },
       { title: 'Page Two', component: Page2 }
     ];
 
@@ -41,7 +41,7 @@ export class MyApp {
       Splashscreen.hide();
       this.af.auth.subscribe(res => {
         if (!!res){
-          this.rootPage = Page1;
+          this.rootPage = Resource;
         } else{
           this.rootPage = LoginPage;
         }

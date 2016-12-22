@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ResourceDetailsPage } from '../resource-details/resource-details.ts'
+import { FireBaseService } from '../../providers/firebase.service';
 
 import { NavController } from 'ionic-angular';
 
@@ -7,11 +8,12 @@ import { NavController } from 'ionic-angular';
   selector: 'page-page1',
   templateUrl: 'page1.html'
 })
-export class Page1 {
+export class Resource {
 
   resources: Array<{}>;
+  projects: Array<{}>;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private fb: FireBaseService) {
     this.resources = [{
       title: "Excavators",
       icon: "flask",
@@ -35,13 +37,27 @@ export class Page1 {
       icon: "beer",
       quantity: 20,
       used: 15
-    }]
+    }];
+
+    this.fb.fetchProjects$().subscribe(res => {
+      this.projects = res;
+      console.log(res);
+    })
   }
 
-  itemTapped(event, item) {
+
+  ionViewDidLoad() {
+    this.fb.fetchActivitiesList$().subscribe(res => {
+      console.log(res);
+    })
+
+    
+  }
+
+  itemTapped(event, project) {
     // That's right, we're pushing to ourselves!
     this.navCtrl.push(ResourceDetailsPage, {
-      item: item
+      item: project
     });
   }
 
