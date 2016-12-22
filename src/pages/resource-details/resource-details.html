@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>resourceDetails</ion-title>
+    <ion-title>Activities for {{selectedResource.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,20 +15,20 @@
 
 <ion-content padding>
   <ion-item-group>
-  <ion-item-divider color="light">Activities for {{selectedResource.name}}</ion-item-divider>
-    <ion-list>
-      <button ion-item *ngFor="let activity of activityDetails" (click)="itemTapped($event, activity)">
-        <!-- <ion-icon [name]="item.icon" item-left></ion-icon> -->
-        {{activity.date}}
-        <!-- <ion-badge item-right>{{item.quantity}}</ion-badge> -->
-      </button>
-    </ion-list>
+  <!-- <ion-item-divider color="light">Activities for {{selectedResource.name}}</ion-item-divider> -->
+    <ion-item>
+      <ion-label>Start Date</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
+    </ion-item>
+    <!-- <ion-list>
+      <div  *ngFor="let activity of activityDetails" >
+        <button ion-item (click)="itemTapped($event, activity)">
+          {{activity.date}}
+        </button>
+        <button ion-item (click)="itemTapped($event, activity)">
+          {{activity.masterActivityId}}
+        </button>
+      </div>
+    </ion-list> -->
   </ion-item-group>
-  <!-- <ion-list>
-    <ion-list-header>
-      {{activityDetails.date}}
-    </ion-list-header>
-    <ion-item>Quantity Available: {{activityDetails.masterActivityId}}</ion-item>
-    <ion-item>Quantity Used: {{activityDetails.projectId}}</ion-item>
-  </ion-list> -->
 </ion-content>
