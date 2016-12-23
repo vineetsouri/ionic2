@@ -49,7 +49,6 @@ export class ResourceDetailsPage {
                   if(data1.masterResourceId == resource.$key) {
                     data1["masterResourceName"] = resource.name;
                     data["resourceDetails"] = data1;
-                    console.log(res);
                   }
                 })
               })
@@ -58,7 +57,6 @@ export class ResourceDetailsPage {
         })
       })
       this.activityDetails = res;
-      console.log(this.activityDetails);
       this.showActivities(this.event.month);
     })
   }
@@ -67,8 +65,6 @@ export class ResourceDetailsPage {
     this.selectedDateActivityDetails = this.activityDetails.filter( activity => {
       return activity.date == date;
     })  
-    console.log(this.selectedDateActivityDetails);
-    // console.log(this.selectedDateActivityDetails);
   }
 
   dateChange(e){

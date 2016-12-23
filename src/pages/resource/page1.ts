@@ -10,40 +10,20 @@ import { NavController } from 'ionic-angular';
 })
 export class Resource {
 
-  resources: Array<{}>;
-  projects: Array<{}>;
+  projects: Array<{}> = [];
 
   constructor(public navCtrl: NavController, private fb: FireBaseService) {
-    this.resources = [{
-      title: "Excavators",
-      icon: "flask",
-      quantity: 4,
-      used: 2
-    },
-    {
-      title: "Truck",
-      icon: "boat",
-      quantity: 35,
-      used: 20
-    },
-    {
-      title: "Tractor",
-      icon: "build",
-      quantity: 50,
-      used: 20
-    },
-    {
-      title: "Man Power",
-      icon: "beer",
-      quantity: 20,
-      used: 15
-    }];
 
     this.fb.fetchProjects$().subscribe(res => {
-      this.projects = res;
+      res.forEach(project => {
+        this.fb.userProjects[0].projects.forEach(data => {
+          if(project.$key === data){
+            this.projects.push(project);
+          }
+        })
+      })
     })
   }
-
 
   ionViewDidLoad() {
     
@@ -55,6 +35,4 @@ export class Resource {
       item: project
     });
   }
-
-
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
-import { Resource } from '../resource/page1';
+// import { Resource } from '../resource/page1';
 
 /*
   Generated class for the Login page.
@@ -29,7 +29,6 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    console.log('Hello LoginPage Page');
   }
 
   doLogin() {
@@ -39,7 +38,7 @@ export class LoginPage {
     loadingItem.present();
     this.af.auth.login({email: this.loginUserName, password: this.loginPassword}).then(data => {
       loadingItem.dismissAll();
-      this.navCtrl.push(Resource);
+      // this.navCtrl.push(Resource);
     }).catch(err => {
       console.log(err);
       loadingItem.dismissAll();
