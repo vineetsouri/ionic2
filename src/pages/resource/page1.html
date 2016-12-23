@@ -8,14 +8,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-item-group>
-      <ion-item-divider color="light">List of Projects</ion-item-divider>
+  <div *ngFor="let project of projects">
+    <ion-card (click)="itemTapped($event, project)">
+      <ion-card-header>
+        {{project.name}}
+      </ion-card-header>
+
       <ion-list>
-        <button ion-item *ngFor="let project of projects" (click)="itemTapped($event, project)">
-          <!-- <ion-icon [name]="item.icon" item-left></ion-icon> -->
-          {{project.name}}
-          <!-- <ion-badge item-right>{{item.quantity}}</ion-badge> -->
+        <button ion-item>
+          <!-- <ion-icon name="cart" item-left></ion-icon> -->
+          Description: {{project.description}}
         </button>
       </ion-list>
-  </ion-item-group>
+    </ion-card>
+  </div>
 </ion-content>

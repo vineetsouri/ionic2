@@ -7,28 +7,39 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Activities for {{selectedResource.name}}</ion-title>
+    <ion-title>Activities for {{selectedProject.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
-<ion-content padding>
-  <ion-item-group>
-  <!-- <ion-item-divider color="light">Activities for {{selectedResource.name}}</ion-item-divider> -->
+<ion-content>
+  <!-- <ion-item-group>
     <ion-item>
-      <ion-label>Start Date</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
+      <ion-label>Select Date to view Activities</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month" (ionChange)="dateChange($event)"></ion-datetime>
     </ion-item>
-    <!-- <ion-list>
-      <div  *ngFor="let activity of activityDetails" >
-        <button ion-item (click)="itemTapped($event, activity)">
-          {{activity.date}}
+    <div *ngFor="let activity of selectedDateActivityDetails">
+      <ion-item-divider color="light">{{activity.masterActivityName}}</ion-item-divider>
+      <ion-item>{{activity.resourceDetails.masterResourceName}}</ion-item>
+    </div>
+  </ion-item-group> -->
+  <ion-item>
+    <ion-label>Select Date to view Activities</ion-label>
+    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month" (ionChange)="dateChange($event)"></ion-datetime>
+  </ion-item>
+  <div *ngFor="let activity of selectedDateActivityDetails">
+    <ion-card>
+      <ion-card-header>
+        {{activity.masterActivityName}}
+      </ion-card-header>
+
+      <ion-list>
+        <button ion-item>
+          <ion-icon name="cart" item-left></ion-icon>
+          {{activity.resourceDetails.masterResourceName}}
+          <ion-badge item-right>{{activity.resourceDetails.quantity}}</ion-badge>
         </button>
-        <button ion-item (click)="itemTapped($event, activity)">
-          {{activity.masterActivityId}}
-        </button>
-      </div>
-    </ion-list> -->
-  </ion-item-group>
+      </ion-list>
+    </ion-card>
+  </div>
 </ion-content>

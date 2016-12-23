@@ -41,16 +41,11 @@ export class Resource {
 
     this.fb.fetchProjects$().subscribe(res => {
       this.projects = res;
-      console.log(res);
     })
   }
 
 
   ionViewDidLoad() {
-    this.fb.fetchActivitiesList$().subscribe(res => {
-      console.log(res);
-    })
-
     
   }
 
