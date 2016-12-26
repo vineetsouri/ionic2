@@ -13,16 +13,6 @@
 </ion-header>
 
 <ion-content>
-  <!-- <ion-item-group>
-    <ion-item>
-      <ion-label>Select Date to view Activities</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month" (ionChange)="dateChange($event)"></ion-datetime>
-    </ion-item>
-    <div *ngFor="let activity of selectedDateActivityDetails">
-      <ion-item-divider color="light">{{activity.masterActivityName}}</ion-item-divider>
-      <ion-item>{{activity.resourceDetails.masterResourceName}}</ion-item>
-    </div>
-  </ion-item-group> -->
   <ion-item>
     <ion-label>Select Date to view Activities</ion-label>
     <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month" (ionChange)="dateChange($event)"></ion-datetime>

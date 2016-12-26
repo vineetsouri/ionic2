@@ -18,16 +18,18 @@ export class FireBaseService {
 
   public usersList$: Observable<any>;
   constructor(private af: AngularFire) {
-    this.fetchAuthDetails();
+    this.fetchUserProjects();
     this.fetchActivitiesList$();
     this.fetchResourcesList$();
   }
 
-  fetchAuthDetails() {
+  fetchUserProjects() {
     this.af.auth.subscribe(res => {
       if(!!res){
         this.fetchUsersList$(res.uid).subscribe(data => {
-          return this.userProjects = data;
+          console.log(data);
+          this.userProjects = data
+          return this.userProjects;
         });
         // this.fetchProjectForCurrentUser$();
       }

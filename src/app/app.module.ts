@@ -5,6 +5,7 @@ import { Resource } from '../pages/resource/page1';
 import { Page2 } from '../pages/page2/page2';
 import { FireBaseService } from '../providers/firebase.service'
 import { LoginPage } from '../pages/login/login';
+import { AddActivityToProjectsPage } from '../pages/add-activity-to-projects/add-activity-to-projects';
 import { ResourceDetailsPage } from '../pages/resource-details/resource-details';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -26,7 +27,8 @@ export const firebaseAuthConfig = {
     LoginPage,
     Resource,
     Page2,
-    ResourceDetailsPage
+    ResourceDetailsPage,
+    AddActivityToProjectsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -38,7 +40,8 @@ export const firebaseAuthConfig = {
     LoginPage,
     Resource,
     Page2,
-    ResourceDetailsPage
+    ResourceDetailsPage,
+    AddActivityToProjectsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, FireBaseService]
 })

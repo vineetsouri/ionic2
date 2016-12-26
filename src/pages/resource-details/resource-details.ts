@@ -20,7 +20,7 @@ export class ResourceDetailsPage {
   masterActivityList: any;
   masterResourceList: any;
   today = new Date();
-  event: any; 
+  event: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private fb: FireBaseService) {
@@ -35,7 +35,6 @@ export class ResourceDetailsPage {
       month: this.today.getFullYear().toString()+"-"+(this.today.getMonth()+1).toString()+"-"+this.today.getDate().toString()
     };
   }
-
 
   ionViewDidLoad() {
     this.fb.fetchProjectActivities$(this.selectedProject.$key).subscribe(res => {
