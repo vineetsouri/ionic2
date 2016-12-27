@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import * as _ from 'lodash';
+
 import { FireBaseService } from '../../providers/firebase.service';
 
 /*
@@ -38,18 +40,15 @@ export class AddActivityToProjectsPage {
   ionViewDidLoad() {
 
     this.fb.fetchProjects$().subscribe(res => {
-      console.log(res);
       res.forEach(project => {
         this.fb.userProjects[0].projects.forEach(data => {
-          console.log(data);
           if(project.$key === data){
             this.userProjects.push(project);
+            this.userProjects = _.uniqBy(this.userProjects, '$key')
           }
         })
       })
-      console.log(this.userProjects);
     })
-    console.log('Hello AddActivityToProjectsPage Page');
   }
 
   stpSelect() {

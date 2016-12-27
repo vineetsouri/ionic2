@@ -36,13 +36,13 @@ export class FireBaseService {
     })
   }
 
-  fetchProjectForCurrentUser$() {
-    return this.af.auth.map(user => user.uid)
-    .switchMap(userId => this.fetchUsersList$(userId))
-    .switchMap(userData => Observable.from(userData[0].projects))
-    .mergeMap(projectId => this.fetchProjectDetail(projectId));
-    // .subscribe(x => console.log(x));
-  }
+  // fetchProjectForCurrentUser$() {
+  //   return this.af.auth.map(user => user.uid)
+  //   .switchMap(userId => this.fetchUsersList$(userId))
+  //   .switchMap(userData => Observable.from(userData[0].projects))
+  //   .mergeMap(projectId => this.fetchProjectDetail(projectId));
+  //   // .subscribe(x => console.log(x));
+  // }
 
   fetchProjectDetail(projectId) {
     return this.af.database.object(`/projects/${projectId}`);
