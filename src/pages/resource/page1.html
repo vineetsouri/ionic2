@@ -10,15 +10,14 @@
 <ion-content>
   <div *ngFor="let project of projects">
     <ion-card (click)="itemTapped($event, project)">
-      <ion-card-header>
+      <img src="http://il5.picdn.net/shutterstock/videos/4013338/thumb/1.jpg"/>
+      <!-- http://ionicframework.com/dist/preview-app/www/assets/img/nin-live.png -->
+      <ion-card-title>
         {{project.name}}
-      </ion-card-header>
-
-      <ion-list>
-        <button ion-item>
-          Description: {{project.description}}
-        </button>
-      </ion-list>
+      </ion-card-title>
+      <p>
+        Description: This is a Shopping Mall Construction.. Blah..Blahh..Blah..Blahh..something and something description {{project.description}}
+      </p>
     </ion-card>
   </div>
 </ion-content>

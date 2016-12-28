@@ -17,24 +17,24 @@ import { FireBaseService } from '../../providers/firebase.service';
 })
 export class AddActivityToProjectsPage {
 
-  gaming: string = "n64";
-  gender: string = "f";
-  os: string;
-  music: string;
   month: string;
   year: number;
   userProjects: Array<{}> = [];
   selectedProject: Object;
+  masterActivities: Array<{}>;
+  selectedActivity: String;
+  masterResources: Array<{}>;
+  selectedResource: String;
+  event: any;
+  today = new Date();
+  
 
   musicAlertOpts: { title: string, subTitle: string };
 
   constructor(public navCtrl: NavController, private fb: FireBaseService) {
-    this.musicAlertOpts = {
-      title: '1994 Music',
-      subTitle: 'Select your favorite'
+    this.event = {
+      month: this.today.getFullYear().toString()+"-"+(this.today.getMonth()+1).toString()+"-"+this.today.getDate().toString()
     };
-
-    // this.projects = this.fb.fetchUserProjects();
   }
 
   ionViewDidLoad() {
@@ -49,6 +49,27 @@ export class AddActivityToProjectsPage {
         })
       })
     })
+    this.fb.fetchActivitiesList$().subscribe(allActivities => {
+      this.masterActivities = allActivities;
+    })
+
+    this.fb.fetchResourcesList$().subscribe(allResources => {
+      this.masterResources = allResources;
+    })
+  }
+
+  projectChange(event){
+    // console.log("Event: "+event);
+    // console.log("Selected Project: "+this.selectedProject);
+    // console.log("Selected Activity: "+this.selectedActivity);
+    // console.log("Selected Resource: "+this.selectedResource);
+  }
+
+  addActivityToProject(){
+   console.log("Event: "+event);
+    console.log("Selected Project: "+this.selectedProject);
+    console.log("Selected Activity: "+this.selectedActivity);
+    console.log("Selected Resource: "+this.selectedResource); 
   }
 
   stpSelect() {
