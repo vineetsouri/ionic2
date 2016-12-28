@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { ResourceDetailsPage } from '../resource-details/resource-details.ts'
+import { ResourceDetailsPage } from '../resource-details/resource-details';
 import { FireBaseService } from '../../providers/firebase.service';
+import { FirebaseListObservable } from 'angularfire2';
+
+import * as _ from 'lodash';
+
 
 import { NavController } from 'ionic-angular';
 
@@ -10,48 +14,25 @@ import { NavController } from 'ionic-angular';
 })
 export class Resource {
 
-  resources: Array<{}>;
-  projects: Array<{}>;
+  projects: Array<{}> = [];
+  projectsSubscription: FirebaseListObservable<any>
 
   constructor(public navCtrl: NavController, private fb: FireBaseService) {
-    this.resources = [{
-      title: "Excavators",
-      icon: "flask",
-      quantity: 4,
-      used: 2
-    },
-    {
-      title: "Truck",
-      icon: "boat",
-      quantity: 35,
-      used: 20
-    },
-    {
-      title: "Tractor",
-      icon: "build",
-      quantity: 50,
-      used: 20
-    },
-    {
-      title: "Man Power",
-      icon: "beer",
-      quantity: 20,
-      used: 15
-    }];
-
-    this.fb.fetchProjects$().subscribe(res => {
-      this.projects = res;
-      console.log(res);
+    this.projectsSubscription = this.fb.fetchProjects$();
+    this.projectsSubscription.subscribe(res => {
+      res.forEach(project => {
+        this.fb.userProjects[0].projects.forEach(data => {
+          if(project.$key === data){
+            this.projects.push(project);
+            this.projects = _.uniqBy(this.projects, '$key');
+          }
+        })
+      })
     })
   }
 
-
   ionViewDidLoad() {
-    this.fb.fetchActivitiesList$().subscribe(res => {
-      console.log(res);
-    })
-
-    
+    // this.projectsSubscription.
   }
 
   itemTapped(event, project) {
@@ -60,6 +41,4 @@ export class Resource {
       item: project
     });
   }
-
-
 }

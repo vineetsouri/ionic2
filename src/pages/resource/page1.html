@@ -8,14 +8,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-item-group>
-      <ion-item-divider color="light">List of Projects</ion-item-divider>
-      <ion-list>
-        <button ion-item *ngFor="let project of projects" (click)="itemTapped($event, project)">
-          <!-- <ion-icon [name]="item.icon" item-left></ion-icon> -->
-          {{project.name}}
-          <!-- <ion-badge item-right>{{item.quantity}}</ion-badge> -->
-        </button>
-      </ion-list>
-  </ion-item-group>
+  <div *ngFor="let project of projects">
+    <ion-card (click)="itemTapped($event, project)">
+      <img src="http://il5.picdn.net/shutterstock/videos/4013338/thumb/1.jpg"/>
+      <!-- http://ionicframework.com/dist/preview-app/www/assets/img/nin-live.png -->
+      <ion-card-title>
+        {{project.name}}
+      </ion-card-title>
+      <p>
+        Description: This is a Shopping Mall Construction.. Blah..Blahh..Blah..Blahh..something and something description {{project.description}}
+      </p>
+    </ion-card>
+  </div>
 </ion-content>

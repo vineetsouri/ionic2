@@ -21749,6 +21749,10 @@ sub {
   }
 }
 
+page-page1 {
+  font-family: 'Lato', sans-serif;
+}
+
 page-resource-details .list-header-md {
   border-top: 0px;
 }

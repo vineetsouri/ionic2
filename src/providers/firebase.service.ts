@@ -9,6 +9,8 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 export class FireBaseService {
 
   // masterActivities: Array<{}>;
+  userProjects;
+  public userDetails$: FirebaseListObservable<any>;
   public masterActivities$: FirebaseListObservable<any>;
   public masterResources$: FirebaseListObservable<any>;
   public projectActivities$: FirebaseListObservable<any>;
@@ -16,11 +18,45 @@ export class FireBaseService {
 
   public usersList$: Observable<any>;
   constructor(private af: AngularFire) {
-    console.log('In AF constructor');
+    this.fetchUserProjects();
     this.fetchActivitiesList$();
     this.fetchResourcesList$();
   }
 
+  fetchUserProjects() {
+    this.af.auth.subscribe(res => {
+      if(!!res){
+        this.fetchUsersList$(res.uid).subscribe(data => {
+          console.log(data);
+          this.userProjects = data
+          return this.userProjects;
+        });
+        // this.fetchProjectForCurrentUser$();
+      }
+    })
+  }
+
+  // fetchProjectForCurrentUser$() {
+  //   return this.af.auth.map(user => user.uid)
+  //   .switchMap(userId => this.fetchUsersList$(userId))
+  //   .switchMap(userData => Observable.from(userData[0].projects))
+  //   .mergeMap(projectId => this.fetchProjectDetail(projectId));
+  //   // .subscribe(x => console.log(x));
+  // }
+
+  fetchProjectDetail(projectId) {
+    return this.af.database.object(`/projects/${projectId}`);
+  }
+
+  fetchUsersList$(userId): FirebaseListObservable<any> {
+    this.userDetails$ = this.af.database.list('/users', {
+      query: {
+        orderByChild: 'authId',
+        equalTo: userId
+      }
+    }) as FirebaseListObservable<any>;
+    return this.userDetails$;
+  }
 
   fetchActivitiesList$(): FirebaseListObservable<any> {
     this.masterActivities$ = this.af.database.list('/activitiesList') as FirebaseListObservable<any>;
@@ -34,7 +70,7 @@ export class FireBaseService {
 
   fetchProjects$(): FirebaseListObservable<any> {
     return this.af.database.list('/projects') as FirebaseListObservable<any>;
-  }
+  } 
 
   fetchProjectActivities$(projectId): FirebaseListObservable<any> {
     this.projectActivities$ = this.af.database.list('/activities', {

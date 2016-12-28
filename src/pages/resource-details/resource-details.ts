@@ -14,29 +14,30 @@ import { FireBaseService } from '../../providers/firebase.service'
 })
 export class ResourceDetailsPage {
 
-  selectedResource: any;
+  selectedProject: any;
   activityDetails: any;
+  selectedDateActivityDetails: any;
   masterActivityList: any;
   masterResourceList: any;
-  public event = {
-    month: '1990-02-19',
-    timeStarts: '07:43',
-    timeEnds: '1990-02-20'
-  }
+  today = new Date();
+  event: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private fb: FireBaseService) {
-    this.selectedResource = navParams.get('item');
+    this.selectedProject = navParams.get('item');
     this.fb.masterActivities$.subscribe(res => {
       this.masterActivityList = res;
     });
     this.fb.masterResources$.subscribe(res => {
       this.masterResourceList = res;
     });
+    this.event = {
+      month: this.today.getFullYear().toString()+"-"+(this.today.getMonth()+1).toString()+"-"+this.today.getDate().toString()
+    };
   }
 
   ionViewDidLoad() {
-    this.fb.fetchProjectActivities$(this.selectedResource.$key).subscribe(res => {
+    this.fb.fetchProjectActivities$(this.selectedProject.$key).subscribe(res => {
       res.forEach(data => {
         this.masterActivityList.forEach(activity => {
           if(data.masterActivityId == activity.$key){
@@ -54,8 +55,19 @@ export class ResourceDetailsPage {
           }
         })
       })
-      console.log(res);
       this.activityDetails = res;
+      this.showActivities(this.event.month);
     })
+  }
+
+  showActivities(date){
+    this.selectedDateActivityDetails = this.activityDetails.filter( activity => {
+      return activity.date == date;
+    })  
+  }
+
+  dateChange(e){
+    var seletedDate = e.year.text+"-"+e.month.value.toString()+"-"+e.day.text;
+    this.showActivities(seletedDate);
   }
 }
