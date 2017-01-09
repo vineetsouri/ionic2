@@ -31,7 +31,6 @@ export class FireBaseService {
           this.userProjects = data
           return this.userProjects;
         });
-        // this.fetchProjectForCurrentUser$();
       }
     })
   }
@@ -56,6 +55,22 @@ export class FireBaseService {
       }
     }) as FirebaseListObservable<any>;
     return this.userDetails$;
+  }
+
+  addActivityToProject$(selectedProject: any, selectedActivity: any, selectedResource: any, usedQuantity: number, date: any) {
+    this.af.database.list('activities').push({
+      date: date,
+      masterActivityId: selectedActivity,
+      projectId : selectedProject
+    }).then(val => {
+      this.af.database.list('resources').push({
+        activityId: val.key,
+        masterResourceId: selectedResource,
+        quantity : usedQuantity
+      }).then(val => {
+        console.log(val);
+      })
+    })
   }
 
   fetchActivitiesList$(): FirebaseListObservable<any> {

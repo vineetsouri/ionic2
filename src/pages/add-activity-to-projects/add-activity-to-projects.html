@@ -46,11 +46,11 @@
 
     <ion-item>
       <ion-label>Enter the Quantity</ion-label>
-      <ion-input type="number" value=""></ion-input>
+      <ion-input type="number" value="" [(ngModel)]="usedQuantity"></ion-input>
     </ion-item>
 
     <ion-item>
-    <ion-label>Date <sup>* add only for current day</sup></ion-label>
+      <ion-label>Date <sup>* add only for current day</sup></ion-label>
       <ion-datetime disabled="true" displayFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
     </ion-item>
   </ion-list>

@@ -20,6 +20,7 @@ export class ResourceDetailsPage {
   masterActivityList: any;
   masterResourceList: any;
   today = new Date();
+  modifiedValue: string;
   event: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -32,12 +33,14 @@ export class ResourceDetailsPage {
       this.masterResourceList = res;
     });
     this.event = {
-      month: this.today.getFullYear().toString()+"-"+(this.today.getMonth()+1).toString()+"-"+this.today.getDate().toString()
+      month: this.today.getFullYear().toString()+"-"+this.pad((this.today.getMonth()+1))+"-"+this.pad(this.today.getDate())
     };
+    console.log(this.event.month);
   }
 
   ionViewDidLoad() {
     this.fb.fetchProjectActivities$(this.selectedProject.$key).subscribe(res => {
+      // debugger
       res.forEach(data => {
         this.masterActivityList.forEach(activity => {
           if(data.masterActivityId == activity.$key){
@@ -61,13 +64,20 @@ export class ResourceDetailsPage {
   }
 
   showActivities(date){
+    console.log(date);
     this.selectedDateActivityDetails = this.activityDetails.filter( activity => {
       return activity.date == date;
     })  
   }
 
+  pad(d) {
+    this.modifiedValue = (d < 10) ? '0' + d.toString() : d.toString();
+    return this.modifiedValue;
+  }
+
   dateChange(e){
-    var seletedDate = e.year.text+"-"+e.month.value.toString()+"-"+e.day.text;
-    this.showActivities(seletedDate);
+    var selectedDate = e.year.text+"-"+this.pad(e.month.value)+"-"+e.day.text;
+    console.log(selectedDate);
+    this.showActivities(selectedDate);
   }
 }
