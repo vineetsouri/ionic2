@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ResourceDetailsPage } from '../resource-details/resource-details';
+import { AddActivityToProjectsPage } from '../add-activity-to-projects/add-activity-to-projects';
 import { FireBaseService } from '../../providers/firebase.service';
 import { FirebaseListObservable } from 'angularfire2';
 
@@ -40,5 +41,10 @@ export class Resource {
     this.navCtrl.push(ResourceDetailsPage, {
       item: project
     });
+  }
+
+  openPage(fab){
+    fab.close();
+    this.navCtrl.push(AddActivityToProjectsPage, {});
   }
 }

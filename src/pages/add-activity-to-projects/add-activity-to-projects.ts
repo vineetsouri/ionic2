@@ -69,11 +69,6 @@ export class AddActivityToProjectsPage {
   }
 
   addActivityToProject(){
-    console.log("Event: "+event);
-    console.log("Selected Project: "+this.selectedProject);
-    console.log("Selected Activity: "+this.selectedActivity);
-    console.log("Selected Resource: "+this.selectedResource);
-    console.log("used Quantity: "+this.usedQuantity);
     this.fb.addActivityToProject$(this.selectedProject, this.selectedActivity, this.selectedResource, parseInt(this.usedQuantity), this.event.month);
   }
 

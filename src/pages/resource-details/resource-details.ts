@@ -35,12 +35,10 @@ export class ResourceDetailsPage {
     this.event = {
       month: this.today.getFullYear().toString()+"-"+this.pad((this.today.getMonth()+1))+"-"+this.pad(this.today.getDate())
     };
-    console.log(this.event.month);
   }
 
-  ionViewDidLoad() {
+  ionViewCanEnter() {
     this.fb.fetchProjectActivities$(this.selectedProject.$key).subscribe(res => {
-      // debugger
       res.forEach(data => {
         this.masterActivityList.forEach(activity => {
           if(data.masterActivityId == activity.$key){
@@ -64,7 +62,6 @@ export class ResourceDetailsPage {
   }
 
   showActivities(date){
-    console.log(date);
     this.selectedDateActivityDetails = this.activityDetails.filter( activity => {
       return activity.date == date;
     })  
@@ -77,7 +74,6 @@ export class ResourceDetailsPage {
 
   dateChange(e){
     var selectedDate = e.year.text+"-"+this.pad(e.month.value)+"-"+e.day.text;
-    console.log(selectedDate);
     this.showActivities(selectedDate);
   }
 }
