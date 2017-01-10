@@ -25,15 +25,17 @@ export class AddActivityToProjectsPage {
   selectedActivity: String;
   masterResources: Array<{}>;
   selectedResource: String;
+  usedQuantity: string;
   event: any;
   today = new Date();
+  modifiedValue: string;
   
 
   musicAlertOpts: { title: string, subTitle: string };
 
   constructor(public navCtrl: NavController, private fb: FireBaseService) {
     this.event = {
-      month: this.today.getFullYear().toString()+"-"+(this.today.getMonth()+1).toString()+"-"+this.today.getDate().toString()
+      month: this.today.getFullYear().toString()+"-"+this.pad((this.today.getMonth()+1))+"-"+this.pad(this.today.getDate())
     };
   }
 
@@ -59,17 +61,15 @@ export class AddActivityToProjectsPage {
   }
 
   projectChange(event){
-    // console.log("Event: "+event);
-    // console.log("Selected Project: "+this.selectedProject);
-    // console.log("Selected Activity: "+this.selectedActivity);
-    // console.log("Selected Resource: "+this.selectedResource);
+  }
+
+  pad(d) {
+    this.modifiedValue = (d < 10) ? '0' + d.toString() : d.toString();
+    return this.modifiedValue;
   }
 
   addActivityToProject(){
-   console.log("Event: "+event);
-    console.log("Selected Project: "+this.selectedProject);
-    console.log("Selected Activity: "+this.selectedActivity);
-    console.log("Selected Resource: "+this.selectedResource); 
+    this.fb.addActivityToProject$(this.selectedProject, this.selectedActivity, this.selectedResource, parseInt(this.usedQuantity), this.event.month);
   }
 
   stpSelect() {

@@ -23,7 +23,7 @@
         {{activity.masterActivityName}}
       </ion-card-header>
 
-      <ion-list>
+      <ion-list *ngIf="activity.resourceDetails">
         <button ion-item>
           <ion-icon name="cart" item-left></ion-icon>
           {{activity.resourceDetails.masterResourceName}}

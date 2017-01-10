@@ -20,6 +20,7 @@ export class ResourceDetailsPage {
   masterActivityList: any;
   masterResourceList: any;
   today = new Date();
+  modifiedValue: string;
   event: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -32,11 +33,11 @@ export class ResourceDetailsPage {
       this.masterResourceList = res;
     });
     this.event = {
-      month: this.today.getFullYear().toString()+"-"+(this.today.getMonth()+1).toString()+"-"+this.today.getDate().toString()
+      month: this.today.getFullYear().toString()+"-"+this.pad((this.today.getMonth()+1))+"-"+this.pad(this.today.getDate())
     };
   }
 
-  ionViewDidLoad() {
+  ionViewCanEnter() {
     this.fb.fetchProjectActivities$(this.selectedProject.$key).subscribe(res => {
       res.forEach(data => {
         this.masterActivityList.forEach(activity => {
@@ -66,8 +67,13 @@ export class ResourceDetailsPage {
     })  
   }
 
+  pad(d) {
+    this.modifiedValue = (d < 10) ? '0' + d.toString() : d.toString();
+    return this.modifiedValue;
+  }
+
   dateChange(e){
-    var seletedDate = e.year.text+"-"+e.month.value.toString()+"-"+e.day.text;
-    this.showActivities(seletedDate);
+    var selectedDate = e.year.text+"-"+this.pad(e.month.value)+"-"+e.day.text;
+    this.showActivities(selectedDate);
   }
 }

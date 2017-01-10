@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { ResourceDetailsPage } from '../resource-details/resource-details';
+import { AddActivityToProjectsPage } from '../add-activity-to-projects/add-activity-to-projects';
 import { FireBaseService } from '../../providers/firebase.service';
 import { FirebaseListObservable } from 'angularfire2';
 
 import * as _ from 'lodash';
 
 
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-page1',
@@ -17,7 +18,16 @@ export class Resource {
   projects: Array<{}> = [];
   projectsSubscription: FirebaseListObservable<any>
 
-  constructor(public navCtrl: NavController, private fb: FireBaseService) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController,
+              private fb: FireBaseService) {
+    this.fetchProjects();
+  }
+
+  ionViewDidLoad() {
+    // this.projectsSubscription.
+  }
+
+  fetchProjects() {
     this.projectsSubscription = this.fb.fetchProjects$();
     this.projectsSubscription.subscribe(res => {
       res.forEach(project => {
@@ -31,14 +41,53 @@ export class Resource {
     })
   }
 
-  ionViewDidLoad() {
-    // this.projectsSubscription.
-  }
-
   itemTapped(event, project) {
     // That's right, we're pushing to ourselves!
     this.navCtrl.push(ResourceDetailsPage, {
       item: project
     });
   }
+
+  openPage(fab){
+    fab.close();
+    this.navCtrl.push(AddActivityToProjectsPage, {});
+  }
+
+  showPrompt(fab) {
+    fab.close();
+    let prompt = this.alertCtrl.create({
+      title: 'Add new Project',
+      message: "Enter a name and description",
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'Title'
+        },
+        {
+          name: 'description',
+          placeholder: 'Description'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log(data);
+            this.fb.addProject$(data);
+            this.fetchProjects();
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
 }
+
+
