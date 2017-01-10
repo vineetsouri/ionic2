@@ -10,7 +10,9 @@ export class FireBaseService {
 
   // masterActivities: Array<{}>;
   userProjects;
+  userId;
   public userDetails$: FirebaseListObservable<any>;
+  public masterProjects$: FirebaseListObservable<any>;
   public masterActivities$: FirebaseListObservable<any>;
   public masterResources$: FirebaseListObservable<any>;
   public projectActivities$: FirebaseListObservable<any>;
@@ -26,6 +28,7 @@ export class FireBaseService {
   fetchUserProjects() {
     this.af.auth.subscribe(res => {
       if(!!res){
+        this.userId = res.uid;
         this.fetchUsersList$(res.uid).subscribe(data => {
           console.log(data);
           this.userProjects = data
@@ -73,6 +76,17 @@ export class FireBaseService {
     })
   }
 
+  addProject$(projectDetails: any) {
+    return this.af.database.list('projects').push({
+      description: projectDetails.description,
+      name: projectDetails.title
+    }).then(val => {
+      // this.fetchUsersList$(this.userId).subscribe(data => {
+      //   data[0].projects.push(val.key);
+      // });
+    });
+  }
+
   fetchActivitiesList$(): FirebaseListObservable<any> {
     this.masterActivities$ = this.af.database.list('/activitiesList') as FirebaseListObservable<any>;
     return this.masterActivities$;
@@ -84,7 +98,8 @@ export class FireBaseService {
   }
 
   fetchProjects$(): FirebaseListObservable<any> {
-    return this.af.database.list('/projects') as FirebaseListObservable<any>;
+    this.masterProjects$ = this.af.database.list('/projects') as FirebaseListObservable<any>;
+    return this.masterProjects$
   } 
 
   fetchProjectActivities$(projectId): FirebaseListObservable<any> {

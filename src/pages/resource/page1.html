@@ -23,7 +23,7 @@
   <ion-fab right bottom #fab>
     <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="left">
-      <button ion-button color="danger" round>Add Project</button>
+      <button ion-button color="danger" round (click)="showPrompt(fab)">Add Project</button>
       <button ion-button color="danger" round (click)="openPage(fab)">Add Activity</button>
     </ion-fab-list>
   </ion-fab>
