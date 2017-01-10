@@ -30,21 +30,12 @@ export class FireBaseService {
       if(!!res){
         this.userId = res.uid;
         this.fetchUsersList$(res.uid).subscribe(data => {
-          console.log(data);
           this.userProjects = data
           return this.userProjects;
         });
       }
     })
   }
-
-  // fetchProjectForCurrentUser$() {
-  //   return this.af.auth.map(user => user.uid)
-  //   .switchMap(userId => this.fetchUsersList$(userId))
-  //   .switchMap(userData => Observable.from(userData[0].projects))
-  //   .mergeMap(projectId => this.fetchProjectDetail(projectId));
-  //   // .subscribe(x => console.log(x));
-  // }
 
   fetchProjectDetail(projectId) {
     return this.af.database.object(`/projects/${projectId}`);
@@ -71,7 +62,6 @@ export class FireBaseService {
         masterResourceId: selectedResource,
         quantity : usedQuantity
       }).then(val => {
-        console.log(val);
       })
     })
   }
@@ -81,9 +71,10 @@ export class FireBaseService {
       description: projectDetails.description,
       name: projectDetails.title
     }).then(val => {
-      // this.fetchUsersList$(this.userId).subscribe(data => {
-      //   data[0].projects.push(val.key);
-      // });
+      this.userProjects[0].projects.push(val.key);
+      this.af.database.list('/users').update(this.userProjects[0].$key,{
+        projects: this.userProjects[0].projects
+      });
     });
   }
 

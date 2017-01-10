@@ -78,10 +78,9 @@ export class Resource {
         {
           text: 'Save',
           handler: data => {
-            console.log(data);
-            this.fb.addProject$(data);
-            this.fetchProjects();
-            console.log('Saved clicked');
+            this.fb.addProject$(data).then(val => {
+              this.fetchProjects();
+            })
           }
         }
       ]
