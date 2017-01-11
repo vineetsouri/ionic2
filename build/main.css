@@ -21748,3 +21748,11 @@ sub {
     padding-top: calc(16px + 20px);
   }
 }
+
+page-page1 {
+  font-family: 'Lato', sans-serif;
+}
+
+page-resource-details .list-header-md {
+  border-top: 0px;
+}
