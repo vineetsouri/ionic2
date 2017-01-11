@@ -8,7 +8,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { AngularFire } from 'angularfire2';
 // import * as _ from 'lodash';
@@ -23,21 +22,13 @@ var FireBaseService = (function () {
         var _this = this;
         this.af.auth.subscribe(function (res) {
             if (!!res) {
+                _this.userId = res.uid;
                 _this.fetchUsersList$(res.uid).subscribe(function (data) {
-                    console.log(data);
                     _this.userProjects = data;
                     return _this.userProjects;
                 });
             }
         });
-    };
-    FireBaseService.prototype.fetchProjectForCurrentUser$ = function () {
-        var _this = this;
-        return this.af.auth.map(function (user) { return user.uid; })
-            .switchMap(function (userId) { return _this.fetchUsersList$(userId); })
-            .switchMap(function (userData) { return Observable.from(userData[0].projects); })
-            .mergeMap(function (projectId) { return _this.fetchProjectDetail(projectId); });
-        // .subscribe(x => console.log(x));
     };
     FireBaseService.prototype.fetchProjectDetail = function (projectId) {
         return this.af.database.object("/projects/" + projectId);
@@ -51,6 +42,33 @@ var FireBaseService = (function () {
         });
         return this.userDetails$;
     };
+    FireBaseService.prototype.addActivityToProject$ = function (selectedProject, selectedActivity, selectedResource, usedQuantity, date) {
+        var _this = this;
+        return this.af.database.list('activities').push({
+            date: date,
+            masterActivityId: selectedActivity,
+            projectId: selectedProject
+        }).then(function (val) {
+            _this.af.database.list('resources').push({
+                activityId: val.key,
+                masterResourceId: selectedResource,
+                quantity: usedQuantity
+            }).then(function (val) {
+            });
+        });
+    };
+    FireBaseService.prototype.addProject$ = function (projectDetails) {
+        var _this = this;
+        return this.af.database.list('projects').push({
+            description: projectDetails.description,
+            name: projectDetails.title
+        }).then(function (val) {
+            _this.userProjects[0].projects.push(val.key);
+            _this.af.database.list('/users').update(_this.userProjects[0].$key, {
+                projects: _this.userProjects[0].projects
+            });
+        });
+    };
     FireBaseService.prototype.fetchActivitiesList$ = function () {
         this.masterActivities$ = this.af.database.list('/activitiesList');
         return this.masterActivities$;
@@ -60,7 +78,8 @@ var FireBaseService = (function () {
         return this.masterResources$;
     };
     FireBaseService.prototype.fetchProjects$ = function () {
-        return this.af.database.list('/projects');
+        this.masterProjects$ = this.af.database.list('/projects');
+        return this.masterProjects$;
     };
     FireBaseService.prototype.fetchProjectActivities$ = function (projectId) {
         this.projectActivities$ = this.af.database.list('/activities', {

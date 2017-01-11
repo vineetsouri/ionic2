@@ -10,53 +10,46 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Add Activity To Project</ion-title>
+    <ion-title>Add Activity To {{selectedProject.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-label>Select a Project</ion-label>
-      <ion-select [(ngModel)]="selectedProject" (ionChange)="projectChange($event)">
-        <div *ngFor="let project of userProjects">
-          <ion-option value="{{project.$key}}">{{project.name}}</ion-option>
-        </div>
-      </ion-select>
-    </ion-item>
+  <form [formGroup]="myFormValidation" (ngSubmit)="addActivityToProject()">
+    <ion-list>
+      <ion-item>
+        <ion-label>Select the type of Activity</ion-label>
+        <ion-select formControlName="activity">
+          <div *ngFor="let activity of masterActivities">
+            <ion-option value="{{activity.$key}}">{{activity.name}}</ion-option>
+          </div>
+        </ion-select>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Select the type of Activity</ion-label>
-      <ion-select [(ngModel)]="selectedActivity">
-        <div *ngFor="let activity of masterActivities">
-          <ion-option value="{{activity.$key}}">{{activity.name}}</ion-option>
-        </div>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label>Select the type of Resource</ion-label>
+        <ion-select formControlName="resource">
+          <div *ngFor="let resource of masterResources">
+            <ion-option value="{{resource.$key}}">{{resource.name}}</ion-option>
+          </div>
+        </ion-select>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Select the type of Resource</ion-label>
-      <ion-select [(ngModel)]="selectedResource">
-        <div *ngFor="let resource of masterResources">
-          <ion-option value="{{resource.$key}}">{{resource.name}}</ion-option>
-        </div>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label>Enter the Quantity</ion-label>
+        <ion-input formControlName="quantity" type="number" value=""></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Enter the Quantity</ion-label>
-      <ion-input type="number" value="" [(ngModel)]="usedQuantity"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Date <sup>* add only for current day</sup></ion-label>
+        <ion-datetime disabled="true" displayFormat="MMM DD YYYY" formControlName="date"></ion-datetime>
+      </ion-item>
+    </ion-list>
 
-    <ion-item>
-      <ion-label>Date <sup>* add only for current day</sup></ion-label>
-      <ion-datetime disabled="true" displayFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
-    </ion-item>
-  </ion-list>
-
-  <button ion-button full (click)="addActivityToProject()">
-    <ion-icon padding name="hammer"></ion-icon>
-    Add Activity
-  </button>
+    <button ion-button full  type="submit" [disabled]="myFormValidation.invalid">
+      <ion-icon padding name="hammer"></ion-icon>
+      Add Activity
+    </button>
+  </form>
 </ion-content>

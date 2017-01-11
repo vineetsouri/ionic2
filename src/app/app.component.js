@@ -11,7 +11,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { AngularFire } from 'angularfire2';
-import { AddActivityToProjectsPage } from '../pages/add-activity-to-projects/add-activity-to-projects';
 import { LoginPage } from '../pages/login/login';
 import { Resource } from '../pages/resource/page1';
 // import { Page2 } from '../pages/page2/page2';
@@ -46,8 +45,7 @@ var MyApp = (function () {
                         }
                         else if (!!res && (data[0].role == "supervisor")) {
                             _this.rootPage = Resource;
-                            _this.pages = [{ title: 'Resources', component: Resource },
-                                { title: 'Add Activity', component: AddActivityToProjectsPage }];
+                            _this.pages = [{ title: 'Resources', component: Resource }];
                         }
                     });
                 }

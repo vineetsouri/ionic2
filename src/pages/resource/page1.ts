@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ResourceDetailsPage } from '../resource-details/resource-details';
-import { AddActivityToProjectsPage } from '../add-activity-to-projects/add-activity-to-projects';
 import { FireBaseService } from '../../providers/firebase.service';
 import { FirebaseListObservable } from 'angularfire2';
 
@@ -48,11 +47,6 @@ export class Resource {
     });
   }
 
-  openPage(fab){
-    fab.close();
-    this.navCtrl.push(AddActivityToProjectsPage, {});
-  }
-
   showPrompt(fab) {
     fab.close();
     let prompt = this.alertCtrl.create({
@@ -78,10 +72,9 @@ export class Resource {
         {
           text: 'Save',
           handler: data => {
-            console.log(data);
-            this.fb.addProject$(data);
-            this.fetchProjects();
-            console.log('Saved clicked');
+            this.fb.addProject$(data).then(val => {
+              this.fetchProjects();
+            })
           }
         }
       ]

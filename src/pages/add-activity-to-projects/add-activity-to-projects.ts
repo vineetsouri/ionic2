@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import * as _ from 'lodash';
 
@@ -29,17 +30,27 @@ export class AddActivityToProjectsPage {
   event: any;
   today = new Date();
   modifiedValue: string;
+  myFormValidation: FormGroup;
   
 
   musicAlertOpts: { title: string, subTitle: string };
 
-  constructor(public navCtrl: NavController, private fb: FireBaseService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private fb: FireBaseService, private formBuilder: FormBuilder) {
+    this.selectedProject = navParams.get('selectedProject');
     this.event = {
       month: this.today.getFullYear().toString()+"-"+this.pad((this.today.getMonth()+1))+"-"+this.pad(this.today.getDate())
     };
+    this.myFormValidation = this.formBuilder.group({
+      activity: ['', Validators.required],
+      resource: ['', Validators.required],
+      quantity: ['', Validators.required],
+      date: [this.event.month]
+    });
   }
 
   ionViewDidLoad() {
+
 
     this.fb.fetchProjects$().subscribe(res => {
       res.forEach(project => {
@@ -60,16 +71,16 @@ export class AddActivityToProjectsPage {
     })
   }
 
-  projectChange(event){
-  }
-
   pad(d) {
     this.modifiedValue = (d < 10) ? '0' + d.toString() : d.toString();
     return this.modifiedValue;
   }
 
   addActivityToProject(){
-    this.fb.addActivityToProject$(this.selectedProject, this.selectedActivity, this.selectedResource, parseInt(this.usedQuantity), this.event.month);
+    console.log(this.myFormValidation.value);
+    this.fb.addActivityToProject$(this.selectedProject["$key"], this.myFormValidation.value).then(value => {
+      this.navCtrl.pop();
+    });
   }
 
   stpSelect() {

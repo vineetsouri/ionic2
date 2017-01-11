@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase.service';
+import { AddActivityToProjectsPage } from '../add-activity-to-projects/add-activity-to-projects';
 /*
   Generated class for the ResourceDetails page.
 
@@ -31,10 +32,10 @@ var ResourceDetailsPage = (function () {
             _this.masterResourceList = res;
         });
         this.event = {
-            month: this.today.getFullYear().toString() + "-" + (this.today.getMonth() + 1).toString() + "-" + this.today.getDate().toString()
+            month: this.today.getFullYear().toString() + "-" + this.pad((this.today.getMonth() + 1)) + "-" + this.pad(this.today.getDate())
         };
     }
-    ResourceDetailsPage.prototype.ionViewDidLoad = function () {
+    ResourceDetailsPage.prototype.ionViewCanEnter = function () {
         var _this = this;
         this.fb.fetchProjectActivities$(this.selectedProject.$key).subscribe(function (res) {
             res.forEach(function (data) {
@@ -63,9 +64,19 @@ var ResourceDetailsPage = (function () {
             return activity.date == date;
         });
     };
+    ResourceDetailsPage.prototype.pad = function (d) {
+        this.modifiedValue = (d < 10) ? '0' + d.toString() : d.toString();
+        return this.modifiedValue;
+    };
     ResourceDetailsPage.prototype.dateChange = function (e) {
-        var seletedDate = e.year.text + "-" + e.month.value.toString() + "-" + e.day.text;
-        this.showActivities(seletedDate);
+        var selectedDate = e.year.text + "-" + this.pad(e.month.value) + "-" + e.day.text;
+        this.showActivities(selectedDate);
+    };
+    ResourceDetailsPage.prototype.openPage = function (fab) {
+        fab.close();
+        this.navCtrl.push(AddActivityToProjectsPage, {
+            selectedProject: this.selectedProject
+        });
     };
     return ResourceDetailsPage;
 }());

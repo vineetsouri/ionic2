@@ -8,6 +8,7 @@ import { LoginPage } from '../pages/login/login';
 import { AddActivityToProjectsPage } from '../pages/add-activity-to-projects/add-activity-to-projects';
 import { ResourceDetailsPage } from '../pages/resource-details/resource-details';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyB1uU4D27iEm54moCM_N1KS8vfOXTCmZbU',
@@ -32,7 +33,8 @@ export const firebaseAuthConfig = {
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig)
+    AngularFireModule.initializeApp(firebaseConfig, firebaseAuthConfig),
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

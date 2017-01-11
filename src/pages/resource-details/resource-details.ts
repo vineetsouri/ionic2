@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase.service'
+import { AddActivityToProjectsPage } from '../add-activity-to-projects/add-activity-to-projects';
 
 /*
   Generated class for the ResourceDetails page.
@@ -75,5 +76,12 @@ export class ResourceDetailsPage {
   dateChange(e){
     var selectedDate = e.year.text+"-"+this.pad(e.month.value)+"-"+e.day.text;
     this.showActivities(selectedDate);
+  }
+
+  openPage(fab){
+    fab.close();
+    this.navCtrl.push(AddActivityToProjectsPage, {
+      selectedProject: this.selectedProject
+    });
   }
 }

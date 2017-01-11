@@ -30,21 +30,12 @@ export class FireBaseService {
       if(!!res){
         this.userId = res.uid;
         this.fetchUsersList$(res.uid).subscribe(data => {
-          console.log(data);
           this.userProjects = data
           return this.userProjects;
         });
       }
     })
   }
-
-  // fetchProjectForCurrentUser$() {
-  //   return this.af.auth.map(user => user.uid)
-  //   .switchMap(userId => this.fetchUsersList$(userId))
-  //   .switchMap(userData => Observable.from(userData[0].projects))
-  //   .mergeMap(projectId => this.fetchProjectDetail(projectId));
-  //   // .subscribe(x => console.log(x));
-  // }
 
   fetchProjectDetail(projectId) {
     return this.af.database.object(`/projects/${projectId}`);
@@ -60,18 +51,17 @@ export class FireBaseService {
     return this.userDetails$;
   }
 
-  addActivityToProject$(selectedProject: any, selectedActivity: any, selectedResource: any, usedQuantity: number, date: any) {
-    this.af.database.list('activities').push({
-      date: date,
-      masterActivityId: selectedActivity,
+  addActivityToProject$(selectedProject: any, formValue: any) {
+    return this.af.database.list('activities').push({
+      date: formValue["date"],
+      masterActivityId: formValue["activity"],
       projectId : selectedProject
     }).then(val => {
       this.af.database.list('resources').push({
         activityId: val.key,
-        masterResourceId: selectedResource,
-        quantity : usedQuantity
+        masterResourceId: formValue["resource"],
+        quantity : formValue["quantity"]
       }).then(val => {
-        console.log(val);
       })
     })
   }
@@ -81,9 +71,10 @@ export class FireBaseService {
       description: projectDetails.description,
       name: projectDetails.title
     }).then(val => {
-      // this.fetchUsersList$(this.userId).subscribe(data => {
-      //   data[0].projects.push(val.key);
-      // });
+      this.userProjects[0].projects.push(val.key);
+      this.af.database.list('/users').update(this.userProjects[0].$key,{
+        projects: this.userProjects[0].projects
+      });
     });
   }
 
