@@ -7,6 +7,7 @@ import { FireBaseService } from '../providers/firebase.service'
 import { LoginPage } from '../pages/login/login';
 import { AddActivityToProjectsPage } from '../pages/add-activity-to-projects/add-activity-to-projects';
 import { ResourceDetailsPage } from '../pages/resource-details/resource-details';
+import { ResourceDetailsTabPage } from '../pages/resource-details-tab/resource-details-tab';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -29,7 +30,8 @@ export const firebaseAuthConfig = {
     Resource,
     Page2,
     ResourceDetailsPage,
-    AddActivityToProjectsPage
+    AddActivityToProjectsPage,
+    ResourceDetailsTabPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -43,7 +45,8 @@ export const firebaseAuthConfig = {
     Resource,
     Page2,
     ResourceDetailsPage,
-    AddActivityToProjectsPage
+    AddActivityToProjectsPage,
+    ResourceDetailsTabPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, FireBaseService]
 })
