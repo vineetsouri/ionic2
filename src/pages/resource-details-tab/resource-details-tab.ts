@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { ResourceDetailsPage } from '../resource-details/resource-details'
+import { NavController, NavParams } from 'ionic-angular';
+import { ResourceDetailsPage } from '../resource-details/resource-details';
+// import { Page2 } from '../page2/page2'
 
 /*
   Generated class for the ResourceDetailsTab page.
@@ -16,14 +17,20 @@ export class ResourceDetailsTabPage {
 
   tab1Root: any;
   tab2Root: any;
+  activityParams: any;
+  activityParams2: any;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.activityParams = navParams.get('item');
+    this.activityParams2 = navParams.get('item');
+    this.activityParams["manage"] = false;
+    // this.activityParams2["manage"] = true;
+
     this.tab1Root = ResourceDetailsPage;
     this.tab2Root = ResourceDetailsPage;
   }
 
   ionViewDidLoad() {
-    console.log('Hello ResourceDetailsTabPage Page');
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ResourceDetailsPage } from '../resource-details/resource-details';
+// import { ResourceDetailsPage } from '../resource-details/resource-details';
+import { ResourceDetailsTabPage } from '../resource-details-tab/resource-details-tab';
 import { FireBaseService } from '../../providers/firebase.service';
 import { FirebaseListObservable } from 'angularfire2';
 
@@ -42,7 +43,7 @@ export class Resource {
 
   itemTapped(event, project) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ResourceDetailsPage, {
+    this.navCtrl.push(ResourceDetailsTabPage, {
       item: project
     });
   }

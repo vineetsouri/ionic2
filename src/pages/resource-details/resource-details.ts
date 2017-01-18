@@ -23,10 +23,17 @@ export class ResourceDetailsPage {
   today = new Date();
   modifiedValue: string;
   event: any;
+  isManage: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private fb: FireBaseService) {
-    this.selectedProject = navParams.get('item');
+    // this.selectedProject = navParams.get('item');
+
+    this.isManage = navParams.data;
+    console.log(this.isManage);
+
+    this.selectedProject = navParams.data;
+
     this.fb.masterActivities$.subscribe(res => {
       this.masterActivityList = res;
     });
@@ -39,6 +46,9 @@ export class ResourceDetailsPage {
   }
 
   ionViewCanEnter() {
+    this.isManage = this.navParams.data;
+    console.log(this.isManage);
+
     this.fb.fetchProjectActivities$(this.selectedProject.$key).subscribe(res => {
       res.forEach(data => {
         this.masterActivityList.forEach(activity => {
