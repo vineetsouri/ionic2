@@ -77,7 +77,6 @@ export class AddActivityToProjectsPage {
   }
 
   addActivityToProject(){
-    console.log(this.myFormValidation.value);
     this.fb.addActivityToProject$(this.selectedProject["$key"], this.myFormValidation.value).then(value => {
       this.navCtrl.pop();
     });

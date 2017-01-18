@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FireBaseService } from '../../providers/firebase.service'
 import { AddActivityToProjectsPage } from '../add-activity-to-projects/add-activity-to-projects';
 
@@ -23,16 +23,15 @@ export class ResourceDetailsPage {
   today = new Date();
   modifiedValue: string;
   event: any;
-  isManage: any;
+  isManage: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private fb: FireBaseService) {
+              private fb: FireBaseService, public alerCtrl: AlertController) {
     // this.selectedProject = navParams.get('item');
 
-    this.isManage = navParams.data;
-    console.log(this.isManage);
-
     this.selectedProject = navParams.data;
+
+    this.isManage = false;
 
     this.fb.masterActivities$.subscribe(res => {
       this.masterActivityList = res;
@@ -46,9 +45,10 @@ export class ResourceDetailsPage {
   }
 
   ionViewCanEnter() {
-    this.isManage = this.navParams.data;
-    console.log(this.isManage);
+    this.getActivities();
+  }
 
+  getActivities(){
     this.fb.fetchProjectActivities$(this.selectedProject.$key).subscribe(res => {
       res.forEach(data => {
         this.masterActivityList.forEach(activity => {
@@ -72,6 +72,12 @@ export class ResourceDetailsPage {
     })
   }
 
+  ionViewDidEnter(){
+    if(this.navCtrl['tabTitle'] == "Manage Activities"){
+      this.isManage = true;
+    }
+  }
+
   showActivities(date){
     this.selectedDateActivityDetails = this.activityDetails.filter( activity => {
       return activity.date == date;
@@ -93,5 +99,31 @@ export class ResourceDetailsPage {
     this.navCtrl.push(AddActivityToProjectsPage, {
       selectedProject: this.selectedProject
     });
+  }
+
+  deleteActivity(activity){
+    let  handlerfunction = () => {
+      this.fb.removeActivityFromProject(activity).then(val => {
+        this.getActivities();
+      });
+    }
+    
+    let confirm = this.alerCtrl.create({
+      title: 'Delete this Activity?',
+      message: 'Are you sure. You want to delete this activity?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: handlerfunction
+        }
+      ]
+    });
+    confirm.present()
   }
 }

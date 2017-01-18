@@ -19,6 +19,12 @@
   </ion-item>
   <div *ngFor="let activity of selectedDateActivityDetails">
     <ion-card>
+    <ion-buttons end>
+      <button ion-button color="danger" clear icon-only *ngIf="isManage"(click)="deleteActivity(activity)">
+        <ion-icon name='trash' is-active="false"></ion-icon>
+      </button>
+      
+    </ion-buttons>
       <ion-card-header>
         {{activity.masterActivityName}}
       </ion-card-header>
@@ -32,7 +38,7 @@
       </ion-list>
     </ion-card>
   </div>
-  <ion-fab right bottom #fab>
+  <ion-fab right bottom #fab *ngIf="isManage">
     <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="left">
       <button ion-button color="danger" round (click)="openPage(fab)">Add Activity</button>

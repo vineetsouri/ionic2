@@ -22,9 +22,6 @@ export class ResourceDetailsTabPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.activityParams = navParams.get('item');
-    this.activityParams2 = navParams.get('item');
-    this.activityParams["manage"] = false;
-    // this.activityParams2["manage"] = true;
 
     this.tab1Root = ResourceDetailsPage;
     this.tab2Root = ResourceDetailsPage;
