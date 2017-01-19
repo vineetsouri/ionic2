@@ -24,9 +24,10 @@ export class ResourceDetailsPage {
   modifiedValue: string;
   event: any;
   isManage: boolean;
+  thisDay: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private fb: FireBaseService, public alerCtrl: AlertController) {
+              private fb: FireBaseService, public alertCtrl: AlertController) {
     // this.selectedProject = navParams.get('item');
 
     this.selectedProject = navParams.data;
@@ -42,6 +43,7 @@ export class ResourceDetailsPage {
     this.event = {
       month: this.today.getFullYear().toString()+"-"+this.pad((this.today.getMonth()+1))+"-"+this.pad(this.today.getDate())
     };
+    this.thisDay = this.event.month;
   }
 
   ionViewCanEnter() {
@@ -108,7 +110,7 @@ export class ResourceDetailsPage {
       });
     }
     
-    let confirm = this.alerCtrl.create({
+    let confirm = this.alertCtrl.create({
       title: 'Delete this Activity?',
       message: 'Are you sure. You want to delete this activity?',
       buttons: [
@@ -125,5 +127,39 @@ export class ResourceDetailsPage {
       ]
     });
     confirm.present()
+  }
+
+  editActivity(activity){
+    let  editHandlerfunction = (data) => {
+      this.fb.editActivityFromProject(activity, data).then(val => {
+        this.getActivities();
+      });
+    }
+
+    let prompt = this.alertCtrl.create({
+      title: 'Edit Activity',
+      message: "Please enter the details that you want to edit",
+      inputs: [
+        {
+          name: 'Quantity',
+          placeholder: 'Quantity'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            editHandlerfunction(data);
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 }

@@ -7,19 +7,22 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <div *ngFor="let project of projects">
-    <ion-card (click)="itemTapped($event, project)">
-      <img src="http://il5.picdn.net/shutterstock/videos/4013338/thumb/1.jpg"/>
-      <!-- http://ionicframework.com/dist/preview-app/www/assets/img/nin-live.png -->
-      <ion-card-title>
-        {{project.name}}
-      </ion-card-title>
-      <p>
-        Description: This is a Shopping Mall Construction.. Blah..Blahh..Blah..Blahh..something and something description {{project.description}}
-      </p>
-    </ion-card>
-  </div>
+<ion-content >
+  <ion-card *ngFor="let project of projects">
+    <img (click)="itemTapped($event, project)" src="http://il5.picdn.net/shutterstock/videos/4013338/thumb/1.jpg"/>
+    <!-- http://ionicframework.com/dist/preview-app/www/assets/img/nin-live.png -->
+    <ion-card-title>
+      <ion-buttons class="action-buttons" end>
+        <button ion-button color="danger" clear icon-only (click)="editProject(project)">
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-buttons>
+      {{project.name}}
+    </ion-card-title>
+    <p>
+      Description: This is a Shopping Mall Construction.. Blah..Blahh..Blah..Blahh..something and something description {{project.description}}
+    </p>
+  </ion-card>
   <ion-fab right bottom #fab>
     <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="left">

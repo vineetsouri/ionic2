@@ -21753,6 +21753,16 @@ page-page1 {
   font-family: 'Lato', sans-serif;
 }
 
+.action-buttons {
+  position: absolute;
+  right: 0;
+}
+
 page-resource-details .list-header-md {
   border-top: 0px;
+}
+
+page-resource-details .action-buttons {
+  position: absolute;
+  right: 0;
 }

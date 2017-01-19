@@ -79,13 +79,27 @@ export class FireBaseService {
   }
 
   removeActivityFromProject(activityObject: any){
-    // console.log(activityObject.$key);
-    // console.log(activityObject.resourceDetails.$key);
     var activities = this.af.database.list('/activities');
     var resources = this.af.database.list('/resources');
     return activities.remove(activityObject.$key).then(val => {
       resources.remove(activityObject.resourceDetails.$key);
     })
+  }
+
+  editActivityFromProject(activityObject: any, data: number) {
+    var quant = +data["Quantity"];
+    return this.af.database.list('/resources').update(activityObject.resourceDetails.$key,{
+      quantity: quant
+    });
+  }
+
+  updateProjectDetails(project: any, data: any) {
+    var title = data["title"];
+    var description = data["description"];
+    return this.af.database.list('/projects').update(project.$key,{
+      name: title,
+      description: description
+    });
   }
 
   fetchActivitiesList$(): FirebaseListObservable<any> {

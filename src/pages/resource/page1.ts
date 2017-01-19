@@ -82,6 +82,47 @@ export class Resource {
     });
     prompt.present();
   }
+
+  editProject(project){
+    let  editHandlerfunction = (data) => {
+      this.fb.updateProjectDetails(project, data).then(val => {
+        location.reload();
+        // this.fetchProjects();
+      });
+    }
+    let editPrompt = this.alertCtrl.create({
+      title: 'Edit Project',
+      message: "Edit the name and description",
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'Title',
+          value: project.name
+        },
+        {
+          name: 'description',
+          placeholder: 'Description',
+          value: project.description
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log(data);
+            editHandlerfunction(data);
+          }
+        }
+      ]
+    });
+    editPrompt.present();
+  }
 }
 
 
